@@ -36,11 +36,11 @@ func TestAzureLinuxVMCreation(t *testing.T) {
 	assert.True(t, azure.VirtualMachineExists(t, vmName, resourceGroupName, subscriptionID))
 
 	// ✅ ADDITIONAL TEST 1: Confirm NIC exists and is connected to VM
-	nicExists := azure.NetworkInterfaceExists(t, subscriptionID, resourceGroupName, nicName)
+	nicExists := azure.NetworkInterfaceExists(t, nicName, resourceGroupName, subscriptionID)
 	assert.True(t, nicExists, "NIC should exist and be connected to the VM")
 
-	// ✅ ADDITIONAL TEST 2: Confirm the VM is running the correct Ubuntu version
-	vm := azure.GetVirtualMachine(t, subscriptionID, resourceGroupName, vmName)
+	// // ✅ ADDITIONAL TEST 2: Confirm the VM is running the correct Ubuntu version
+	vm := azure.GetVirtualMachine(t, vmName, resourceGroupName, subscriptionID)
 	assert.NotNil(t, vm.StorageProfile, "VM StorageProfile should not be nil")
 	assert.NotNil(t, vm.StorageProfile.ImageReference, "VM ImageReference should not be nil")
 	assert.Contains(t, *vm.StorageProfile.ImageReference.Sku, "22_04", "VM should be running Ubuntu 22.04")
